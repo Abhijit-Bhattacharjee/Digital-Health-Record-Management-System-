@@ -1,0 +1,20 @@
+{
+  "name": "kerala-migrant-health-record-system",
+  "version": "1.0.0",
+  "description": "Digital health record and public-health surveillance prototype for migrant workers in Kerala aligned with SDGs.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --no-warnings server.js",
+    "dev": "node --no-warnings server.js"
+  },
+  "keywords": [
+    "digital-health",
+    "kerala",
+    "migrant-workers",
+    "sdg",
+    "public-health",
+    "sqlite"
+  ],
+  "author": "",
+  "license": "MIT"
+}

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kerala Migrant Health Record System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">KH</span>
+        <div>
+          <strong>Kerala Health Grid</strong>
+          <span>Migrant Care Registry</span>
+        </div>
+      </div>
+      <nav class="nav-list">
+        <a href="#dashboard" class="nav-link active">Dashboard</a>
+        <a href="#registry" class="nav-link">Registry</a>
+        <a href="#surveillance" class="nav-link">Surveillance</a>
+        <a href="#sdg" class="nav-link">SDG Tracking</a>
+      </nav>
+      <div class="sidebar-note">
+        <span>Privacy mode</span>
+        <strong>Consent-based records</strong>
+      </div>
+    </aside>
+
+    <main class="main-view">
+      <header class="topbar" id="dashboard">
+        <div>
+          <p class="eyebrow">Kerala public health mission</p>
+          <h1>Digital Health Record Management System</h1>
+          <p class="topbar-copy">Portable health records, disease surveillance, and impartial care access for migrant workers.</p>
+        </div>
+        <div class="status-stack" aria-label="System status">
+          <span class="status-chip">SQLite live</span>
+          <span class="status-chip accent">SDG aligned</span>
+        </div>
+      </header>
+
+      <section class="overview-grid" aria-label="System overview">
+        <article class="visual-panel">
+          <img src="assets/kerala-health-network.png" alt="Illustration of Kerala health network with clinics, mobile care and health records">
+          <div class="visual-overlay">
+            <span>Integrated field network</span>
+            <strong>Clinic, camp, laboratory and district surveillance records in one workflow.</strong>
+          </div>
+        </article>
+        <section class="metrics-grid" id="metricsGrid" aria-label="Key metrics"></section>
+      </section>
+
+      <section class="workspace-grid" id="registry">
+        <section class="panel registry-panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Worker registry</p>
+              <h2>Health Records</h2>
+            </div>
+            <button class="primary-button" type="button" id="refreshButton">Refresh</button>
+          </div>
+
+          <div class="filters" aria-label="Registry filters">
+            <label>
+              <span>Search</span>
+              <input type="search" id="searchInput" placeholder="Name, ID, state or sector">
+            </label>
+            <label>
+              <span>District</span>
+              <select id="districtFilter">
+                <option value="all">All districts</option>
+              </select>
+            </label>
+            <label>
+              <span>Risk</span>
+              <select id="riskFilter">
+                <option value="all">All levels</option>
+                <option value="low">Low</option>
+                <option value="moderate">Moderate</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Record</th>
+                  <th>Worker</th>
+                  <th>District</th>
+                  <th>Sector</th>
+                  <th>Last care</th>
+                  <th>Risk</th>
+                </tr>
+              </thead>
+              <tbody id="recordsBody"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <aside class="panel form-panel" aria-label="Register worker">
+          <div class="section-head compact">
+            <div>
+              <p class="eyebrow">New record</p>
+              <h2>Register Worker</h2>
+            </div>
+          </div>
+
+          <form id="registrationForm">
+            <div class="form-grid">
+              <label>
+                <span>Full name</span>
+                <input name="full_name" required>
+              </label>
+              <label>
+                <span>Age</span>
+                <input name="age" type="number" min="0" max="120" required>
+              </label>
+              <label>
+                <span>Gender</span>
+                <select name="gender" required>
+                  <option value="">Select</option>
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Non-binary</option>
+                  <option>Prefer not to say</option>
+                </select>
+              </label>
+              <label>
+                <span>Origin state</span>
+                <input name="origin_state" required>
+              </label>
+              <label>
+                <span>Kerala district</span>
+                <select name="current_district" required>
+                  <option value="">Select</option>
+                  <option>Ernakulam</option>
+                  <option>Kozhikode</option>
+                  <option>Thiruvananthapuram</option>
+                  <option>Kollam</option>
+                  <option>Malappuram</option>
+                  <option>Thrissur</option>
+                  <option>Kannur</option>
+                  <option>Palakkad</option>
+                </select>
+              </label>
+              <label>
+                <span>Work sector</span>
+                <select name="workplace_sector" required>
+                  <option value="">Select</option>
+                  <option>Construction</option>
+                  <option>Textile</option>
+                  <option>Food services</option>
+                  <option>Domestic work</option>
+                  <option>Agriculture</option>
+                  <option>Manufacturing</option>
+                  <option>Retail</option>
+                </select>
+              </label>
+              <label>
+                <span>Mobile</span>
+                <input name="mobile" inputmode="tel">
+              </label>
+              <label>
+                <span>Language</span>
+                <input name="preferred_language">
+              </label>
+              <label>
+                <span>Risk level</span>
+                <select name="risk_level">
+                  <option value="low">Low</option>
+                  <option value="moderate">Moderate</option>
+                  <option value="high">High</option>
+                </select>
+              </label>
+              <label class="wide">
+                <span>Initial symptoms</span>
+                <textarea name="symptoms" rows="3" placeholder="Optional"></textarea>
+              </label>
+            </div>
+            <button class="primary-button full" type="submit">Create Health Record</button>
+            <p class="form-message" id="formMessage" role="status"></p>
+          </form>
+        </aside>
+      </section>
+
+      <section class="lower-grid" id="surveillance">
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Care encounter</p>
+              <h2>Log Visit</h2>
+            </div>
+          </div>
+          <form id="visitForm" class="visit-form">
+            <label>
+              <span>Worker</span>
+              <select id="visitMigrant" name="migrant_id" required></select>
+            </label>
+            <label>
+              <span>Facility</span>
+              <input name="facility" value="Primary Health Centre" required>
+            </label>
+            <label>
+              <span>Disease category</span>
+              <select name="disease_category">
+                <option>General care</option>
+                <option>Respiratory</option>
+                <option>Tuberculosis</option>
+                <option>Vector-borne</option>
+                <option>Maternal health</option>
+                <option>Infectious disease</option>
+              </select>
+            </label>
+            <label>
+              <span>Test status</span>
+              <select name="test_status">
+                <option>Not required</option>
+                <option>Completed</option>
+                <option>Pending lab</option>
+              </select>
+            </label>
+            <label>
+              <span>Vaccination</span>
+              <select name="vaccination_status">
+                <option>Review due</option>
+                <option>Up to date</option>
+                <option>Complete</option>
+              </select>
+            </label>
+            <label>
+              <span>Diagnosis</span>
+              <textarea name="diagnosis" rows="3">General consultation</textarea>
+            </label>
+            <label class="checkline">
+              <input type="checkbox" name="referral_needed">
+              <span>Referral needed</span>
+            </label>
+            <button class="secondary-button full" type="submit">Save Visit</button>
+            <p class="form-message" id="visitMessage" role="status"></p>
+          </form>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Public health surveillance</p>
+              <h2>Disease Signals</h2>
+            </div>
+          </div>
+          <div class="signal-list" id="signalList"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">District coordination</p>
+              <h2>Coverage Load</h2>
+            </div>
+          </div>
+          <div class="bar-list" id="districtLoad"></div>
+        </section>
+
+        <section class="panel">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Alerts</p>
+              <h2>Active Queue</h2>
+            </div>
+          </div>
+          <div class="alert-list" id="alertList"></div>
+        </section>
+      </section>
+
+      <section class="sdg-section" id="sdg">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Sustainable Development Goals</p>
+            <h2>Impact Alignment</h2>
+          </div>
+        </div>
+        <div class="sdg-grid" id="sdgGrid"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
